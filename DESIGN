@@ -1,0 +1,16 @@
+ NAMES
+ Michael Lee, John Lin
+ 
+ PROJECT DESCRIPTION
+ The project is two player chess.
+ 
+ USER INTERFACE
+ The chess board will be displayed in terminal, and commands will be inserted in the terminal to make moves.
+ 
+ TECHNICAL DESIGN
+ We will write into a file containing the moves of each game.
+ We will be using networking and pipes to connect and send data between two computers.
+ 
+ 
+ TIMELINE
+ 
