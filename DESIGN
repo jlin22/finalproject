@@ -2,15 +2,29 @@
  Michael Lee, John Lin
  
  PROJECT DESCRIPTION
- The project is two player chess.
+ The project is chess. 
+ Two players will be able to play against each other in chess. 
+ There will also be an AI for players against in chess.
  
  USER INTERFACE
- The chess board will be displayed in terminal, and commands will be inserted in the terminal to make moves.
+ The first menu will be choosing what to do.
+ Examples include playing a game against another player, playing a game against AI,
+ loading a previous game, and playing from a saved game state
+ The chess game is terminal based.
+ The board will be displayed in terminal, and commands will be inserted in the terminal to make moves.
+ If we have time, we will use external libraries to display the game in a a different format.
+ 
  
  TECHNICAL DESIGN
- We will write into a file containing the moves of each game.
+ 
+ TOPICS COVERED
  We will be using networking and pipes to connect and send data between two computers.
  
+ PROJECT BREAKDOWN
+ 
+ DATA STRUCTURES
+ 
+ ALGORITHMS USED
  
  TIMELINE
  
