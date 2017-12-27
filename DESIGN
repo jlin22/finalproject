@@ -14,17 +14,41 @@
  The board will be displayed in terminal, and commands will be inserted in the terminal to make moves.
  If we have time, we will use external libraries to display the game in a a different format.
  
- 
  TECHNICAL DESIGN
  
  TOPICS COVERED
- We will be using networking and pipes to connect and send data between two computers.
+ We will be using networking to connect and send data between two computers.
+ We will be working with files by writing and reading data about individual chess matches
+ We will be using processes(mainly exec) to run commands in terminal through the C program
+ We will potentially be using pipes for a client and server
+ The client will take in the commands, while the server will display the chess board
+ We will potentially be using signals to kill programs once the user wants to exit
+ We will potentially be using shared memory to access the chess board between separate programs (Unsure about this)
  
  PROJECT BREAKDOWN
+ Michael - Responsible for the chess board, chess AI, and shared memory(if it is even used)
+ John - Responsible for the visuals, writing and reading game states, creating a server and client through pipes, signals,
+ and setting up the network between two computers to allow them to play against each other
+ The visuals include a initial menu that is displayed, and then taking the user into the options that they choose
+ such as playing a new multiplayer game, playing a new AI game, reading an old game state, and exiting the program
  
  DATA STRUCTURES
+ We will use a 2D array to represent the chess board (and potentially a matrix)
+ We will use trees for the minimax algorithm that the AI will use to make a move
  
  ALGORITHMS USED
+ Minimax for the AI (most basic)
+ Alpha beta pruning for advancing the AI
  
  TIMELINE
+ Week of 1/1/18
+ Chess Board
+ Menu and Visuals of Chess Board
+ Inputting Commands
+ Creating a server and client through pipes and signals
+ Week of 1/8/18
+ Shared Memory of Chess Board
+ Chess AI
+ Network between two computers
+ 
  
