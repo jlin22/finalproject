@@ -4,6 +4,7 @@
 int main(){
 
   char board[8][8];
+  init_board(board);
   print_board(board);
   /*char command[256];
   menu(command);
@@ -45,13 +46,28 @@ void load(){
 //board commands
 void init_board(char board[8][8]){
   //beginning board creation
-
-}
-void print_board(char board[8][8]){
   int row, col;
   for (row = 0; row < 8; row++){
     for (col = 0; col < 8; col++){
-      printf("%c ", board[row][col]);
+      board[row][col] = '0';
+      if (row == 1 || row == 6){
+	board[row][col] = 'P';
+      }
     }
-  }    
+  }
 }
+void print_board(char board[8][8]){
+  int row, col;
+  for (row = 0; row < 9; row++){
+    for (col = 0; col < 9; col++){
+      if (row > 0 && col > 0){
+	  printf("%c ", board[row-1][col-1]);
+	  if (col == 8){
+	    printf("\n");
+	  }
+      }
+      
+    }
+  }
+}    
+
