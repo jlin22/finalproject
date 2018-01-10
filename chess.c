@@ -46,7 +46,7 @@ void load(){
 //board commands
 void init_board(char board[8][8]){
   //beginning board creation
-  int row, col;
+  /*int row, col;
   for (row = 0; row < 8; row++){
     for (col = 0; col < 8; col++){
       board[row][col] = '0';
@@ -54,10 +54,10 @@ void init_board(char board[8][8]){
 	board[row][col] = 'P';
       }
     }
-  }
+  }*/
 }
 void print_board(char board[8][8]){
-  int row, col;
+  /*int row, col;
   for (row = 0; row < 9; row++){
     for (col = 0; col < 9; col++){
       if (row > 0 && col > 0){
@@ -68,6 +68,6 @@ void print_board(char board[8][8]){
       }
       
     }
-  }
-}    
+    }*/
+    }    
 
