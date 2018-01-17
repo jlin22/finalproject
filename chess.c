@@ -2,7 +2,6 @@
 
 
 int main(){
-
   char board[8][8];
   init_board(board);
   print_board(board);
@@ -42,6 +41,8 @@ void multiplayer(){
 }
 void load(){
   printf("loading game state\n");
+}
+void save(){
 }
 //board commands
 void init_board(char board[8][8]){
