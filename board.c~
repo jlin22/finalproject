@@ -1,0 +1,18 @@
+#include "chess.h"
+
+
+
+char*** startgame(){
+  char** board = malloc(sizeof(char[][]));
+
+
+
+}
+
+
+void makemove(char* move, char*** board){
+  
+  
+
+}
+
