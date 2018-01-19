@@ -6,36 +6,35 @@ struct board {char a[8][8];};
 
 
 struct board* startgame(){
-  struct board b = malloc(sizeof(struct board));
-  struct board* c = &b;
+  struct board* b = malloc(sizeof(struct board));
   for(int i = 0; i < 8; i++){
     for(int j = 0; j < 8; j++){
-      *c.a[i][j] = 'B';
+      (*b).a[i][j] = 'B';
     }
   }
   
-  return c;
+  return b;
 
 
 }
 
-void printboard(char***board){
+void changespot(struct board* board, int i, int j, char n){
+  (*board).a[i][j] = n;
+}
+
+void printboard(struct board* board){
    for(int i = 0; i < 8; i++){
     for(int j = 0; j < 8; j++){
-      printf("%c ", *board[i][j]);
+      printf("%c ", (*board).a[i][j]);
     }
     printf("\n");
   }  
 }
 
 
-void makemove(char* move, char*** board){
-
-
-}
-
 void main(){
-  char*** board = startgame();
-  //printboard(board);
+  struct board* board = startgame();
+  changespot(board, 4, 4, 'C');
+  printboard(board);
   return;
 }
