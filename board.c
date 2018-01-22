@@ -57,6 +57,37 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
   if(a == 'O'){
     return -1;
   }
+  //KING
+  if(a == 'K'){
+    if((*board).a[m][n] < 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
+
+    if( ((i - m) * (i - m) == 0 || (i - m) * (i - m) == 1) && ((j - n) * (j - n) == 0 || (j - n) * (j - n) == 1)){
+      movepiece(board, i, j, m, n);
+      return 0;
+    }
+    else{
+      return -1;
+    }    
+  }
+  
+  if(a == 'k'){
+    if((*board).a[m][n] > 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
+
+    if( ((i - m) * (i - m) == 0 || (i - m) * (i - m) == 1) && ((j - n) * (j - n) == 0 || (j - n) * (j - n) == 1)){
+      movepiece(board, i, j, m, n);
+      return 0;
+    }
+    else{
+      return -1;
+    }    
+  }
+
+
+  
 
   //Pawns///////////////////////////////////////////////////////////////////
   if(a == 'P'){
@@ -361,8 +392,372 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
   
   
   //////////////////////////////////////////////////////////////////////////////////////
+  //BISHOP
 
+  if(a == 'B'){
+    if((*board).a[m][n] < 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
 
+    if( !( (i - m == j - n) || (i - m == n - j)) ){ //valid moves
+      return -1;
+    }
+
+    int hor = 0;
+    int ver = 0;
+    if(i < m){ //going down
+      ver = 1;
+    }
+    else{ //going up
+      ver = -1;
+    }
+
+    if(j < n){ //going to the right
+      hor = 1;
+    }
+    else{ //going to the left
+      hor = -1;
+    }
+
+    int ci = i + ver;
+    int cj = j + hor;
+    int yes = 0;
+    while(ci != m){
+      if((*board).a[ci][cj] != 'O'){
+	yes = -1;
+      }
+      ci += ver;
+      cj += hor;
+    }
+
+    if(yes == 0){
+      movepiece(board, i, j, m, n);
+      return 0;
+    }
+    else{
+      return -1;
+    }
+    
+
+  }
+  
+  if(a == 'b'){
+    if((*board).a[m][n] > 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
+
+    if( !( (i - m == j - n) || (i - m == n - j)) ){ //valid moves
+      return -1;
+    }
+
+    int hor = 0;
+    int ver = 0;
+    if(i < m){ //going down
+      ver = 1;
+    }
+    else{ //going up
+      ver = -1;
+    }
+
+    if(j < n){ //going to the right
+      hor = 1;
+    }
+    else{ //going to the left
+      hor = -1;
+    }
+
+    int ci = i + ver;
+    int cj = j + hor;
+    int yes = 0;
+    while(ci != m){
+      if((*board).a[ci][cj] != 'O'){
+	yes = -1;
+      }
+      ci += ver;
+      cj += hor;
+    }
+
+    if(yes == 0){
+      movepiece(board, i, j, m, n);
+      return 0;
+    }
+    else{
+      return -1;
+    }
+    
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////
+  //QUEEN
+
+  if( a == 'Q'){
+    if((*board).a[m][n] < 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
+
+    //like a bishop
+    if((i - m == j - n) || (i - m == n - j)){
+      int hor = 0;
+      int ver = 0;
+      if(i < m){ //going down
+	ver = 1;
+      }
+      else{ //going up
+	ver = -1;
+      }
+      
+      if(j < n){ //going to the right
+	hor = 1;
+      }
+      else{ //going to the left
+	hor = -1;
+      }
+      
+      int ci = i + ver;
+      int cj = j + hor;
+      int yes = 0;
+      while(ci != m){
+	if((*board).a[ci][cj] != 'O'){
+	  yes = -1;
+	}
+	ci += ver;
+	cj += hor;
+      }
+      
+      if(yes == 0){
+	movepiece(board, i, j, m, n);
+	return 0;
+      }
+      else{
+	return -1;
+      }    
+    }
+    //like a rook
+    if(i == m || j == n){ 
+      if(i == m){ //horizontal move
+	if( j < n ){ //move to the right
+	  int yes = 0;
+	  
+	  for(int count = j + 1; count < n; count++){
+	    if((*board).a[i][count] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	else if( j > n ){ //move to the left
+	  int yes = 0;
+	  for(int count = j - 1; count > n; count--){
+	    if((*board).a[i][count] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	
+	
+      }
+      
+      if(j == n){ //vertical move
+	
+	
+	
+	if(i < m){ //downward move
+	  int yes = 0;
+	  
+	  for(int count = i + 1; count < m; count++){
+	    if( (*board).a[count][j] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	
+	
+	
+	else if(i > m){ //upward move
+	  int yes = 0;
+	  
+	  for(int count = i - 1; count > m; count--){
+	    if( (*board).a[count][j] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}	
+      }
+      
+    }
+    else{
+      return -1;
+    }   
+  }
+
+  if( a == 'q'){
+    if((*board).a[m][n] > 90 && (*board).a[m][n] != 'O'){ //friendly piece
+      return -1;
+    }
+
+    //like a bishop
+    if((i - m == j - n) || (i - m == n - j)){
+      int hor = 0;
+      int ver = 0;
+      if(i < m){ //going down
+	ver = 1;
+      }
+      else{ //going up
+	ver = -1;
+      }
+      
+      if(j < n){ //going to the right
+	hor = 1;
+      }
+      else{ //going to the left
+	hor = -1;
+      }
+      
+      int ci = i + ver;
+      int cj = j + hor;
+      int yes = 0;
+      while(ci != m){
+	if((*board).a[ci][cj] != 'O'){
+	  yes = -1;
+	}
+	ci += ver;
+	cj += hor;
+      }
+      
+      if(yes == 0){
+	movepiece(board, i, j, m, n);
+	return 0;
+      }
+      else{
+	return -1;
+      }    
+    }
+    //like a rook
+    if(i == m || j == n){ 
+      if(i == m){ //horizontal move
+	if( j < n ){ //move to the right
+	  int yes = 0;
+	  
+	  for(int count = j + 1; count < n; count++){
+	    if((*board).a[i][count] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	else if( j > n ){ //move to the left
+	  int yes = 0;
+	  for(int count = j - 1; count > n; count--){
+	    if((*board).a[i][count] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	
+	
+      }
+      
+      if(j == n){ //vertical move
+	
+	
+	
+	if(i < m){ //downward move
+	  int yes = 0;
+	  
+	  for(int count = i + 1; count < m; count++){
+	    if( (*board).a[count][j] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}
+	
+	
+	
+	
+	else if(i > m){ //upward move
+	  int yes = 0;
+	  
+	  for(int count = i - 1; count > m; count--){
+	    if( (*board).a[count][j] != 'O'){
+	      yes = -1;
+	    }
+	  }
+	  
+	  if(yes == 0){
+	    movepiece(board, i, j, m, n);
+	    return 0;
+	  }
+	  else{
+	    return -1;
+	  }
+	}	
+      }
+      
+    }
+    else{
+      return -1;
+    }   
+  }
 
   return -1;
 }
