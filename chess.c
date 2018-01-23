@@ -2,12 +2,9 @@
 
 
 int main(){
-  char board[8][8];
-  init_board(board);
-  print_board(board);
-  /*char command[256];
+  char command[256];
   menu(command);
-  interpret(command);*/
+  interpret(command);
 }
 //menu commands
 void interpret(char *command){
@@ -16,9 +13,9 @@ void interpret(char *command){
   if (strcmp(command,"ai")==0){
     ai();
   }
-  else if (strcmp(command,"multiplayer")==0){
-    multiplayer();
-  }
+  /*else if (strcmp(command,"multiplayer")==0){
+   multiplayer();
+   }*/
   else if (strcmp(command,"load")==0){
     load();
   }
@@ -44,31 +41,5 @@ void load(){
 }
 void save(){
 }
-//board commands
-void init_board(char board[8][8]){
-  //beginning board creation
-  /*int row, col;
-  for (row = 0; row < 8; row++){
-    for (col = 0; col < 8; col++){
-      board[row][col] = '0';
-      if (row == 1 || row == 6){
-	board[row][col] = 'P';
-      }
-    }
-  }*/
-}
-void print_board(char board[8][8]){
-  /*int row, col;
-  for (row = 0; row < 9; row++){
-    for (col = 0; col < 9; col++){
-      if (row > 0 && col > 0){
-	  printf("%c ", board[row-1][col-1]);
-	  if (col == 8){
-	    printf("\n");
-	  }
-      }
-      
-    }
-    }*/
-    }    
+
 

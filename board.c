@@ -812,9 +812,26 @@ void main(){
     fgets(name, sizeof(name), stdin);
     name[strlen(name)-1]=0;
     int file = open(name, O_RDWR, 0600);
-    struct board* board;
-    read(file, board,4*8*8);
-    //printboard(board);
+    struct board* b = malloc(sizeof(struct board));
+    read(file, b,4*8*8);
+    close(file);
+    printboard(b);
+    while(1){
+      
+      char line[4];
+      fgets(line, 10, stdin);
+      int i = line[0] - '0';
+      int j = line[1] - '0';
+      int m = line[2] - '0';
+      int n = line[3] - '0';
+      
+      movepieceWrap(b, i, j, m, n);
+      printboard(b);
+      //write game states
+      remove(name);
+      int file = open(name, O_CREAT | O_WRONLY, 0600);
+      write(file, b,4*8*8);
+    }
   }
   else{
     printf("invalid command");
