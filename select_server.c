@@ -1,6 +1,5 @@
 #include "networking.h"
 #include "chess.c"
-void process(char *s);
 void subserver(int from_client, struct board* board);
 
 int main() {
@@ -58,19 +57,14 @@ void subserver(int client_socket, struct board* board) {
   while (read(client_socket, buffer, sizeof(buffer))) {
 
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
-    process(buffer);
-    /* int i = buffer[0] - '0';
-    int j = buffer[1] - '0';
-    int m = buffer[2] - '0';
-    int n = buffer[3] - '0';
-    movepieceWrap(board, i, j, m, n);
-    printf("%s", boardstring(board));*/
+    if (strlen(buffer) != 4){
+      strcat(buffer, " is an invalid command");
+    }
+    movepieceWrap(board, buffer[0]-'0', buffer[1]-'0', buffer[2]-'0', buffer[3]-'0');
+    printboard(board);
     write(client_socket, buffer, sizeof(buffer));
   }//end read loop
   close(client_socket);
   exit(0);
 }
 
-void process(char * s) {
-
-}
