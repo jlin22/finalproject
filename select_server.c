@@ -1,10 +1,10 @@
 #include "networking.h"
 #include "chess.c"
 void process(char *s);
-void subserver(int from_client);
+void subserver(int from_client, struct board* board);
 
 int main() {
-
+  struct board* board = startgame();
   int listen_socket;
   int client_socket;
   int f;
@@ -17,7 +17,6 @@ int main() {
   listen_socket = server_setup();
 
   while (1) {
-
     //select() modifies read_fds
     //we must reset it at each iteration
     FD_ZERO(&read_fds); //0 out fd set
@@ -33,7 +32,7 @@ int main() {
 
      f = fork();
      if (f == 0)
-       subserver(client_socket);
+       subserver(client_socket, board);
      else {
        subserver_count++;
        close(client_socket);
@@ -49,7 +48,7 @@ int main() {
   }
 }
 
-void subserver(int client_socket) {
+void subserver(int client_socket, struct board* board) {
   char buffer[BUFFER_SIZE];
 
   //for testing client select statement
@@ -60,6 +59,12 @@ void subserver(int client_socket) {
 
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
     process(buffer);
+    /* int i = buffer[0] - '0';
+    int j = buffer[1] - '0';
+    int m = buffer[2] - '0';
+    int n = buffer[3] - '0';
+    movepieceWrap(board, i, j, m, n);
+    printf("%s", boardstring(board));*/
     write(client_socket, buffer, sizeof(buffer));
   }//end read loop
   close(client_socket);
@@ -67,11 +72,5 @@ void subserver(int client_socket) {
 }
 
 void process(char * s) {
-  while (*s) {
-    if (*s >= 'a' && *s <= 'z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    else  if (*s >= 'A' && *s <= 'Z')
-      *s = ((*s - 'a') + 13) % 26 + 'a';
-    s++;
-  }
+
 }

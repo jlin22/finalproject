@@ -1,7 +1,6 @@
 #include "networking.h"
 #include "chess.c"
 int main(int argc, char **argv) {
-
   int server_socket;
   char buffer[BUFFER_SIZE];
 
@@ -34,7 +33,7 @@ int main(int argc, char **argv) {
       //written buffer is going to be a command of 4 ints
       write(server_socket, buffer, sizeof(buffer));
       //read buffer is going to be the board
-      read(server_socket, buffer, sizeof(buffer));
+      read(server_socket, buffer, 1024);
       
       printf("received: [%s]\n", buffer);
     }//end stdin select
@@ -44,8 +43,8 @@ int main(int argc, char **argv) {
     //this would allow for broadcast messages
     if (FD_ISSET(server_socket, &read_fds)) {
       read(server_socket, buffer, sizeof(buffer));
-      printf("[SERVER BROADCAST] [%s]\n", buffer);
-      printf("enter command: ");
+      //printf("[SERVER BROADCAST] [%s]\n", buffer);
+      //printf("enter command: ");
       //the above printf does not have \n
       //flush the buffer to immediately print
       fflush(stdout);
