@@ -43,8 +43,8 @@ struct board* startgame(){
 
   //MAKES PAWNS
   for(int n = 0; n < 8; n++){
-    (*b).a[1][n] = 'O';
-    (*b).a[6][n] = 'O';
+    (*b).a[1][n] = 'p';
+    (*b).a[6][n] = 'P';
   }
 
   for(int i = 2; i < 6; i++){
