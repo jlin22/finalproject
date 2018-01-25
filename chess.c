@@ -107,6 +107,9 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
 
     if(m == i - 1 && n == j && (*board).a[i - 1][j] == 'O'){ //move one
       movepiece(board, i, j, m, n);
+      if(m == 0){
+	(*board).a[m][n] = 'Q';
+      }
       return 0;
     }
        
@@ -117,6 +120,9 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
     
     if(m == i - 1 && (n == j - 1 || n == j + 1) && (*board).a[m][n] != 'O' && (*board).a[m][n] > 90){ //capture
       movepiece(board, i, j, m, n);
+      if(m == 0){
+	(*board).a[m][n] = 'Q';
+      }
       return 0;
     }
 
@@ -129,6 +135,9 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
 
     if(m == i + 1 && n == j && (*board).a[i + 1][j] == 'O'){ //move one
       movepiece(board, i, j, m, n);
+      if(m == 7){
+	(*board).a[m][n] = 'q';
+      }
       return 0;
     }
        
@@ -139,6 +148,9 @@ int movepieceWrap(struct board* board, int i, int j, int m, int n){
     
     if(m == i + 1 && (n == j - 1 || n == j + 1) && (*board).a[m][n] != 'O' && (*board).a[m][n] < 90){ //capture
       movepiece(board, i, j, m, n);
+      if(m == 7){
+	(*board).a[m][n] = 'q';
+      }
       return 0;
     }
 
