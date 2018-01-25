@@ -5,15 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-/*
-void interpret(char *);
-void menu(char *);
-void ai();
-void multiplayer();
-void load();
-void init_board(char[8][8]);
-void print_board(char[8][8]);
-void save();*/
+
 
 struct board {char a[8][8];};
 
@@ -797,19 +789,16 @@ void printboard(struct board* board){
   }
    
 }
-char* boardstring(struct board* board){
-  char sol[] = "" ;
-  for (int i = 0; i<8; i++){
-    for (int j = 0; j <8; j++){
-      char c[1];
-      c[0] = (*board).a[i][j];
-      strcat(sol, c);
-      printf("%s", sol);
-      strcat(sol, " ");
-      if (i == 7){
-	strcat(sol, "\n");
-      }
-    }
-  }
-  return sol;
+char * boardstring(struct board* board){
+  //puts boardstring in "string"
+  int fd = open("string", O_WRONLY|O_CREAT, 0600);
+  int in= dup(1);
+  dup2(fd, 1);
+  printboard(board);
+  dup2(in, 1);
+  close(fd);
+  int file = open("string", O_RDONLY, 0600);
+  char * buffer;
+  read(file, buffer, 256);
+  return buffer;
 }

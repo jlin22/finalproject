@@ -1,4 +1,5 @@
 #include "networking.h"
+#include "chess.c"
 void process(char *s);
 void subserver(int from_client);
 
