@@ -794,5 +794,22 @@ void printboard(struct board* board){
       printf("%c ", (*board).a[i][j]);
     }
     printf("\n");
-  }  
+  }
+   
+}
+char* boardstring(struct board* board){
+  char sol[] = "" ;
+  for (int i = 0; i<8; i++){
+    for (int j = 0; j <8; j++){
+      char c[1];
+      c[0] = (*board).a[i][j];
+      strcat(sol, c);
+      printf("%s", sol);
+      strcat(sol, " ");
+      if (i == 7){
+	strcat(sol, "\n");
+      }
+    }
+  }
+  return sol;
 }

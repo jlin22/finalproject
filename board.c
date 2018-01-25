@@ -16,7 +16,8 @@ void main(){
     name[strlen(name) -1] = 0;
     printf("initializing game\n");
     struct board* board = startgame();
-    printboard(board);
+     printboard(board);
+    // printf("%s", boardstring(board));
     while(1){
       
       char line[4];

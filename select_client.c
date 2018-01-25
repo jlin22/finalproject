@@ -1,5 +1,5 @@
 #include "networking.h"
-
+#include "chess.c"
 int main(int argc, char **argv) {
 
   int server_socket;
@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
 
   while (1) {
 
-    printf("enter data: ");
+    printf("enter command: ");
     //the above printf does not have \n
     //flush the buffer to immediately print
     fflush(stdout);
@@ -31,8 +31,11 @@ int main(int argc, char **argv) {
     if (FD_ISSET(STDIN_FILENO, &read_fds)) {
       fgets(buffer, sizeof(buffer), stdin);
       *strchr(buffer, '\n') = 0;
+      //written buffer is going to be a command of 4 ints
       write(server_socket, buffer, sizeof(buffer));
+      //read buffer is going to be the board
       read(server_socket, buffer, sizeof(buffer));
+      
       printf("received: [%s]\n", buffer);
     }//end stdin select
 
@@ -42,7 +45,7 @@ int main(int argc, char **argv) {
     if (FD_ISSET(server_socket, &read_fds)) {
       read(server_socket, buffer, sizeof(buffer));
       printf("[SERVER BROADCAST] [%s]\n", buffer);
-      printf("enter data: ");
+      printf("enter command: ");
       //the above printf does not have \n
       //flush the buffer to immediately print
       fflush(stdout);
