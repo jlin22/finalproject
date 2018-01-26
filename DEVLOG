@@ -1,0 +1,25 @@
+DEVLOG
+John Lin
+Date : 12/21/17
+Basic DESIGN Outline
+Date : 12/26/17
+Finished Detailed DESIGN 
+Date : 1/9/18
+Worked on Displaying Board with printboard()
+Date : 1/17/18
+Started Testing with Networking code
+Date : 1/23/18
+Worked on writing board states into a file
+Finished on writing board states into a file
+Worked on loading board states from a file
+Finished on loading board states from a file
+Date : 1/24/18
+Worked on writing board string, which eventually didn't have a use
+Date : 1/25/18
+Worked on sending commands from client to server
+Finished sending commands from client to server
+Worked on applying commands to the chess board
+Finished applying commands to the chess board
+Worked on turns in chess games played through networking
+Finished turns in chess games in networking
+Worked on trying to find all possible moves 
