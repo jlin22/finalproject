@@ -9,9 +9,9 @@ Project Overview
 --------------------------
 This is Chess that can be played in three ways. 
 
-1-Single Player against an AI.
+1-Single Player against an AI.(but currently gives a segfault that we can't figure out)
 
-2-Loading a game state against an AI.
+2-Loading a game state.
 
 3-Against another player
 
@@ -35,6 +35,8 @@ If the game state is in the file, then it will load and play out like a normal g
 Calling ./ai will create a new game in which you can play against an AI
 
 Calling ./server will set up the server that can have multiple clients. When two clients connect, then the game can begin
+
+
 
 Known Bugs
 --------------------------
