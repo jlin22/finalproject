@@ -865,26 +865,43 @@ void addrooks1(struct board * board, int m, int n,int *i , char***ml){
   } 
 }
 void addpawns1(struct board * board, int m, int n,int *i, char***ml){
-  if (m < 7 && (*board).a[m+1][n] == 'O'){
-    (*ml)[*i] = intstring(m,n,m+1,n);
- (*i)++;  }
-  if (m < 7 && n > 0&& (*board).a[m+1][n-1] >90){
-      (*ml)[*i] = intstring(m,n,m+1,n-1);
-       (*i)++;
-    }
-   if (m < 7 && n < 7&& (*board).a[m+1][n+1] >90){
-      (*ml)[*i] = intstring(m,n,m+1,n+1);
+
+  if (m > 0 && (*board).a[m-1][n] == 'O'){
+
+    (*ml)[*i] = intstring(m,n,m-1,n);
+
+(*i)++;  }
+
+  if (m >0 && n > 0&& (*board).a[m-1][n-1] >90){
+
+      (*ml)[*i] = intstring(m,n,m-1,n-1);
+
       (*i)++;
+
     }
-  if (m == 1 && (*board).a[m+2][n] == 'O'){
-    (*ml)[*i] = intstring(m,n,m+2,n);
-     (*i)++;
+
+   if (m >0 && n < 7&& (*board).a[m-1][n+1] >90){
+
+      (*ml)[*i] = intstring(m,n,m-1,n+1);
+
+      (*i)++;
+
+    }
+
+  if (m == 6 && (*board).a[m-2][n] == 'O'){
+
+    (*ml)[*i] = intstring(m,n,m-2,n);
+
+    (*i)++;
+
   }
+
   //case for nonfriends
+
 }
 void addqueens1(struct board * board, int m, int n,int *i, char***ml){
-  addrooks(board, m, n, i, ml);
-  addbishops(board,m,n,i,ml);
+  addrooks1(board, m, n, i, ml);
+  addbishops1(board,m,n,i,ml);
   
 }
 //__________________________________________________________
@@ -892,7 +909,7 @@ void addqueens1(struct board * board, int m, int n,int *i, char***ml){
 
 
 char *** findallmoves(struct board * board){
-  char *** movelist = malloc(sizeof(char[1000][4]));
+  char *** movelist = malloc(sizeof(char[1000][10]));
   int * index ;
   (*index) = 0;
   for (int i = 0; i < 8; i++){
@@ -917,22 +934,22 @@ char *** findallmoves(struct board * board){
 	addpawns(board, i, j, index, movelist);
       }
       if (p = 'K' && (*board).b == -1){
-	//addkings1(board, i, j,index, movelist);
+	addkings1(board, i, j,index, movelist);
       }
       if (p = 'Q' && (*board).b== -1){
-	//addqueens1(board, i, j,index, movelist);
+	addqueens1(board, i, j,index, movelist);
       }
       if (p = 'B' && (*board).b== -1){
-	//addbishops1(board, i, j, index,movelist);
+	addbishops1(board, i, j, index,movelist);
       }
       if (p = 'N' && (*board).b== -1){
-	//addknights1(board, i, j, index,movelist);
+	addknights1(board, i, j, index,movelist);
       }
       if (p = 'R' && (*board).b== -1){
-	//addrooks1(board, i, j, index,movelist);
+	addrooks1(board, i, j, index,movelist);
       }
       if (p = 'P' && (*board).b== -1){
-	//addpawns1(board, i, j, index, movelist);
+	addpawns1(board, i, j, index, movelist);
       }
     }
   }
