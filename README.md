@@ -14,6 +14,7 @@ This is Chess that can be played in three ways.
 2-Loading a game state against an AI.
 
 3-Against another player
+
 Topics Covered
 --------------------------
 Networking to connect two players through a similar server
