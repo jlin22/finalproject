@@ -519,446 +519,983 @@ int evalboard(struct board * board){
       } 
     }
   }
-
   return value;
 }
 
-char * intstring(int a, int b, int c, int d){
-  char* x = malloc(sizeof(char[4]));
-  x[0] = a+'0';
-  x[1] = b+'0';
-  x[2] = c+'0';
-  x[3] = d+'0';  
-  return x;
+char* stringify(int i, int j, int m, int n){
+  char * stuff = malloc(sizeof(char[4]));
+  
+  stuff[0] = i + '0';
+  stuff[1] = j + '0';
+  stuff[2] = m + '0';
+  stuff[3] = n + '0';
+  
+
+  return stuff;
+}
+
+/*
+  (*movelist)[*index][0] = i + '0';
+  (*movelist)[*index][1] = j + '0';
+  (*movelist)[*index][2] = i + '0';
+  (*movelist)[*index][3] = j + '0';
+*/
+
+void addkings(struct board * board, int i, int j, int* index, char ***movelist){
+  if( i+1 < 8 && j+1 < 8){
+    if((*board).a[i+1][j+1] > 90 || (*board).a[i+1][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+      (*index)++;
+    }
+  }
+
+  if( j+1 < 8){
+    if((*board).a[i][j+1] > 90 || (*board).a[i][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > -1 && j+1 < 8){
+    if((*board).a[i-1][j+1] > 90 || (*board).a[i-1][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i+1 < 8){
+    if((*board).a[i+1][j] > 90 || (*board).a[i+1][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > -1){
+    if((*board).a[i-1][j] > 90 || (*board).a[i-1][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i+1 < 8 && j-1 > -1){
+    if((*board).a[i+1][j-1] > 90 || (*board).a[i+1][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if(j-1 > -1){
+    if((*board).a[i][j-1] > 90 || (*board).a[i][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > 0 && j-1 >0){
+    if((*board).a[i-1][j-1] > 90 || (*board).a[i-1][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j - 1+ '0';
+
+      (*index)++;
+    }
+  }
+}
+
+void addkings1(struct board * board, int i, int j, int* index, char ***movelist){
+  if( i+1 < 8 && j+1 < 8){
+    if((*board).a[i+1][j+1] < 90 || (*board).a[i+1][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( j+1 < 8){
+    if((*board).a[i][j+1] < 90 || (*board).a[i][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > -1 && j+1 < 8){
+    if((*board).a[i-1][j+1] < 90 || (*board).a[i-1][j+1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i+1 < 8){
+    if((*board).a[i+1][j] < 90 || (*board).a[i+1][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > -1){
+    if((*board).a[i-1][j] < 90 || (*board).a[i-1][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i+1 < 8 && j-1 > -1){
+    if((*board).a[i+1][j-1] < 90 || (*board).a[i+1][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+      (*index)++;
+    }
+  }
+
+  if(j-1 > -1){
+    if((*board).a[i][j-1] < 90 || (*board).a[i][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  if( i-1 > 0 && j-1 >0){
+    if((*board).a[i-1][j-1] < 90 || (*board).a[i-1][j-1] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+}
+
+void addpawns(struct board * board, int i, int j, int * index, char ***movelist){
+  if((*board).a[i-1][j] == 'O'){
+    (*movelist)[*index][0] = i + '0';
+    (*movelist)[*index][1] = j + '0';
+    (*movelist)[*index][2] = i - 1 + '0';
+    (*movelist)[*index][3] = j + '0';
+
+    (*index)++;
+  }
+
+  if(j+1<8){
+    if((*board).a[i-1][j+1] > 90 && (*board).a[i-1][j+1] != 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+ 
+  if(j-1>-1){
+    if((*board).a[i-1][j-1] > 90 && (*board).a[i-1][j-1] != 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 1 + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  
+  if(i == 6){
+    if((*board).a[i-1][j] == 'O' && (*board).a[i-2][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i - 2 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+}
+
+void addpawns1(struct board * board, int i, int j, int * index, char ***movelist){
+  if((*board).a[i+1][j] == 'O'){
+    (*movelist)[*index][0] = i + '0';
+    (*movelist)[*index][1] = j + '0';
+    (*movelist)[*index][2] = i + 1 + '0';
+    (*movelist)[*index][3] = j + '0';
+
+    (*index)++;
+  }
+
+  if(j+1<8){
+    if((*board).a[i+1][j+1] < 90 && (*board).a[i+1][j+1] != 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j + 1 + '0';
+
+      (*index)++;
+    }
+  }
+ 
+  if(j-1>-1){
+    if((*board).a[i+1][j-1] < 90 && (*board).a[i+1][j-1] != 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + 1 + '0';
+      (*movelist)[*index][3] = j - 1 + '0';
+
+      (*index)++;
+    }
+  }
+
+  
+  if(i == 1){
+    if((*board).a[i+1][j] == 'O' && (*board).a[i+2][j] == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i  + 2 + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+    }
+  }
+}
+
+void addknights(struct board * board, int i, int j, int * index, char ***movelist){
+  if(i+2<8){
+    if(j+1 < 8){
+      if((*board).a[i+2][j+1] > 90 || (*board).a[i+2][j+1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i + 2 + '0';
+	(*movelist)[*index][3] = j + 1 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(j-1 > -1){
+      if((*board).a[i+2][j-1] > 90 || (*board).a[i+2][j-1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i  + 2 + '0';
+	(*movelist)[*index][3] = j  - 1 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(i-2<8){
+    if(j+1 < 8){
+      if((*board).a[i-2][j+1] > 90 || (*board).a[i-2][j+1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 2 + '0';
+	(*movelist)[*index][3] = j  + 1 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(j-1 > -1){
+      if((*board).a[i-2][j-1] > 90 || (*board).a[i-2][j-1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 2 + '0';
+	(*movelist)[*index][3] = j  - 1 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(j+2<8){
+    if(i+1 < 8){
+      if((*board).a[i+1][j+2] > 90 || (*board).a[i+1][j+2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i  + 1 + '0';
+	(*movelist)[*index][3] = j + 2 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(i-1 > -1){
+      if((*board).a[i-1][j+2] > 90 || (*board).a[i-1][j+2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 1 + '0';
+	(*movelist)[*index][3] = j + 2 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(j-2<8){
+    if(i+1 < 8){
+      if((*board).a[i+1][j-2] > 90 || (*board).a[i+1][j-2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i + 1 + '0';
+	(*movelist)[*index][3] = j  - 2 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(i-1 > -1){
+      if((*board).a[i-1][j-2] > 90 || (*board).a[i-1][j-2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i  - 1 + '0';
+	(*movelist)[*index][3] = j  - 2 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+}
+
+void addknights1(struct board * board, int i, int j, int * index, char ***movelist){
+  if(i+2<8){
+    if(j+1 < 8){
+      if((*board).a[i+2][j+1] < 90 || (*board).a[i+2][j+1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i  + 2 + '0';
+	(*movelist)[*index][3] = j  + 1 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(j-1 > -1){
+      if((*board).a[i+2][j-1] < 90 || (*board).a[i+2][j-1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i + 2 + '0';
+	(*movelist)[*index][3] = j - 1 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(i-2<8){
+    if(j+1 < 8){
+      if((*board).a[i-2][j+1] < 90 || (*board).a[i-2][j+1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 2 + '0';
+	(*movelist)[*index][3] = j + 1 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(j-1 > -1){
+      if((*board).a[i-2][j-1] < 90 || (*board).a[i-2][j-1] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 2 + '0';
+	(*movelist)[*index][3] = j - 1 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(j+2<8){
+    if(i+1 < 8){
+      if((*board).a[i+1][j+2] < 90 || (*board).a[i+1][j+2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i + 1 + '0';
+	(*movelist)[*index][3] = j + 2 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(i-1 > -1){
+      if((*board).a[i-1][j+2] < 90 || (*board).a[i-1][j+2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 1 + '0';
+	(*movelist)[*index][3] = j + 2 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+
+  if(j-2<8){
+    if(i+1 < 8){
+      if((*board).a[i+1][j-2] < 90 || (*board).a[i+1][j-2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i + 1 + '0';
+	(*movelist)[*index][3] = j - 2 + '0';
+
+	(*index)++;
+      }
+    }    
+    if(i-1 > -1){
+      if((*board).a[i-1][j-2] < 90 || (*board).a[i-1][j-2] == 'O'){
+	(*movelist)[*index][0] = i + '0';
+	(*movelist)[*index][1] = j + '0';
+	(*movelist)[*index][2] = i - 1 + '0';
+	(*movelist)[*index][3] = j - 2 + '0';
+
+	(*index)++;
+      }
+    }
+  }
+}
+
+
+void addrooks(struct board * board, int i, int j, int * index, char ***movelist){
+  int ic = i + 1;
+  while(ic < 8){
+    char aa = (*board).a[ic][j];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+      ic++;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+      ic = 8;
+    }
+    else if(aa < 90){
+      ic = 8;
+    }
+  }
+
+  ic = i - 1;
+  while(ic > -1){
+    char aa = (*board).a[ic][j];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+      ic--;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+      ic = -1;
+    }
+    else if(aa < 90){
+      ic = -1;
+    }
+  }
+
+  int jc = j + 1;
+  while(jc < 8){
+    char aa = (*board).a[i][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+
+      (*index)++;
+      jc++;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa < 90){
+      jc = 8;
+    }
+  }
+
+  jc = j - 1;
+  while(jc > -1){
+    char aa = (*board).a[i][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+
+      (*index)++;
+      jc--;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa < 90){
+      jc = -1;
+    }
+  }
+}
+
+
+void addrooks1(struct board * board, int i, int j, int * index, char ***movelist){
+  int ic = i + 1;
+  while(ic < 8){
+    char aa = (*board).a[ic][j];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+
+      (*index)++;
+      ic++;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+      (*index)++;
+      ic = 8;
+    }
+    else if(aa > 90){
+      ic = 8;
+    }
+  }
+
+  ic = i - 1;
+  while(ic > -1){
+    char aa = (*board).a[ic][j];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+      (*index)++;
+      ic--;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = j + '0';
+      (*index)++;
+      ic = -1;
+    }
+    else if(aa > 90){
+      ic = -1;
+    }
+  }
+
+  int jc = j + 1;
+  while(jc < 8){
+    char aa = (*board).a[i][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc++;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa > 90){
+      jc = 8;
+    }
+  }
+
+  jc = j - 1;
+  while(jc > -1){
+    char aa = (*board).a[i][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc--;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = i + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa > 90){
+      jc = -1;
+    }
+  }
+}
+
+void addbishops(struct board * board, int i, int j, int * index, char ***movelist){
+  int hor = 1;
+  int ver = 1;
+
+  int ic = i + ver;
+  int jc = j + hor;
+  
+  while(ic < 8 && jc < 8){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa < 90){
+      jc = 8;
+    }
+  }
+  ver = -1;
+  hor = 1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic > -1 && jc < 8){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa < 90){
+      jc = 8;
+    }
+  }
+
+  ver = 1;
+  hor = -1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic < 8 && jc > -1){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa < 90){
+      jc = -1;
+    }
+  }
+
+  ver = -1;
+  hor = -1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic > -1 && jc > -1){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa > 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa < 90){
+      jc = -1;
+    }
+  }
+}
+
+void addbishops1(struct board * board, int i, int j, int * index, char ***movelist){
+  int hor = 1;
+  int ver = 1;
+
+  int ic = i + ver;
+  int jc = j + hor;
+  
+  while(ic < 8 && jc < 8){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa > 90){
+      jc = 8;
+    }
+  }
+  ver = -1;
+  hor = 1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic > -1 && jc < 8){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = 8;
+    }
+    else if(aa > 90){
+      jc = 8;
+    }
+  }
+
+  ver = 1;
+  hor = -1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic < 8 && jc > -1){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa > 90){
+      jc = -1;
+    }
+  }
+
+  ver = -1;
+  hor = -1;
+
+  ic = i + ver;
+  jc = j + hor;
+  while(ic > -1 && jc > -1){
+    char aa = (*board).a[ic][jc];
+    if(aa == 'O'){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      ic += ver;
+      jc += hor;
+    }
+    else if(aa < 90){
+      (*movelist)[*index][0] = i + '0';
+      (*movelist)[*index][1] = j + '0';
+      (*movelist)[*index][2] = ic + '0';
+      (*movelist)[*index][3] = jc + '0';
+      (*index)++;
+      jc = -1;
+    }
+    else if(aa > 90){
+      jc = -1;
+    }
+  }
+}
+
+
+void addqueens(struct board * board, int i, int j, int * index, char ***movelist){
+  addbishops(board, i, j, index, movelist);
+  addrooks(board, i, j, index, movelist);
+}
+
+void addqueens1(struct board * board, int i, int j, int * index, char ***movelist){
+  addbishops1(board, i, j, index, movelist);
+  addrooks1(board, i, j, index, movelist);
 }
   
-int addkings(struct board * board, int m, int n,int i, char***ml){
-  if (m < 7 &&(*board).a[m+1][n] == 'O' ||(*board).a[m+1][n]<90){
-    (*ml)[i] = intstring(m,n,m+1,n);
-    i++;
-  }
-  if (m > 0 &&(*board).a[m-1][n] == 'O'||(*board).a[m-1][n]<90){
-      (*ml)[i] = intstring(m,n,m-1,n);
-      i++;
-  }
-  if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' || (*board).a[m+1][n+1] <90 ){
-    (*ml)[i] = intstring(m,n,m+1,n+1);
-    i++;
-  }
-  if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O' ||(*board).a[m+1][n-1] < 90){
-    (*ml)[i] = intstring(m,n,m+1,n-1);
-    i++;
-  }
-  if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'||(*board).a[m-1][n-1]<90){
-    (*ml)[i] = intstring(m,n,m-1,n-1);
-    i++;
-  }
-  if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'||(*board).a[m-1][n+1]<90){
-    (*ml)[i] = intstring(m,n,m-1,n+1);
-   i++;
-
-  }
-  if (n > 0 &&(*board).a[m][n-1] == 'O' || (*board).a[m][n-1] <90){
-    (*ml)[i] = intstring(m,n,m,n-1);
-    i++;
-  }
-  if (n < 7 &&(*board).a[m][n+1] == 'O'|| (*board).a[m][n+1]<90){
-    (*ml)[i] = intstring(m,n,m,n+1);
-  i++;
-
-  }
-  return i;
-}
-
-int addbishops(struct board * board, int m, int n,int i , char***ml){
-  int in = 1;
-  while (m + in < 7 && n + in < 7 && (*board).a[m+in][n+in] == 'O' || (*board).a[m+in][n+in] <90){
-    (*ml)[i] = intstring(m,n,m+in,n+in);
-     i++;
-    if ((*board).a[m+in][n+in] < 90){
-      in = 8;
-    }
-    in++;
-  }
-  in = 1;
-  while (m - in > 0 && n + in < 7 && (*board).a[m-in][n+in] == 'O' || (*board).a[m-in][n+in] <90){
-    (*ml)[i] = intstring(m,n,m-in,n+in);
-    i++;
-    if ((*board).a[m-in][n+in] < 90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (m - in > 0 && n - in > 0  && (*board).a[m-in][n-in] == 'O' || (*board).a[m-in][n-in] <90){
-    (*ml)[i] = intstring(m,n,m-in,n-in);
-    i++;
-    if ((*board).a[m-in][n-in] < 90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (m + in < 7 && n - in > 0 && (*board).a[m+in][n-in] == 'O' || (*board).a[m+in][n-in] <90){
-    (*ml)[i] = intstring(m,n,m+in,n-in);
-    i++;
-    if ((*board).a[m+in][n-in] < 90){
-      in = 8;
-    }
-    in++; 
-  } 
-  return i;
-}
-int addknights(struct board * board, int m, int n,int i, char***ml){
-   if (m < 6 && n < 7 && (*board).a[m+2][n+1]== 'O' ||(*board).a[m+2][n+1] <90){
-    (*ml)[i] = intstring(m,n,m+2,n+1);
-    i++;
-
-  }
-   if (m < 7 && n < 6 && (*board).a[m+1][n+2] == 'O'||(*board).a[m+1][n+2]<90){
-    (*ml)[i] = intstring(m,n,m+1,n+2);
-    i++;
-
-  }
-   if (m < 6 && n > 0  && (*board).a[m+2][n-1] == 'O'||(*board).a[m+2][n-1]<90){
-    (*ml)[i] = intstring(m,n,m+2,n-1);
-   i++;
-
-  }
-   if (m < 7 && n >1 && (*board).a[m+1][n-2] == 'O'||(*board).a[m+1][n-2]<90){
-    (*ml)[i] = intstring(m,n,m+1,n-2);
-    i++;
-
-  }
-   if (m >0 && n < 6 && (*board).a[m-1][n+2] == 'O'|| (*board).a[m-1][n+2]<90){
-    (*ml)[i] = intstring(m,n,m-1,n+2);
-    i++;
-   }
-   if (m>1 && n < 7 && (*board).a[m-2][n+1] == 'O'|| (*board).a[m-2][n+1]<90){
-     (*ml)[i] = intstring(m,n,m-2,n+1);
-    i++;
-   }
-   if (m > 0 && n > 1  && (*board).a[m-1][n-2] == 'O'||(*board).a[m-1][n-2]<90){
-    (*ml)[i] = intstring(m,n,m-1,n-2);
-     i++;
-   }
-   if (m > 1 && n > 0 && (*board).a[m-2][n-1] == 'O'||(*board).a[m-1][n-2]<90){
-    (*ml)[i] = intstring(m,n,m-2,n-1);
-    i++;
-  }
-   return i;
-}
-int addrooks(struct board * board, int m, int n,int i , char***ml){
-  int in = 1;
-  while (m + in < 7 && (*board).a[m+in][n] == 'O'|| (*board).a[m+in][n] < 90){
-    (*ml)[i] = intstring(m,n,m+in,n);
-    i++;
-    if ((*board).a[m+in][n] <90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (m - in > 0 &&(*board).a[m-in][n] == 'O'|| (*board).a[m-in][n] < 90){
-    (*ml)[i] = intstring(m,n,m-in,n);
-   i++;
-     if ((*board).a[m-in][n] <90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (n + in <7 &&(*board).a[m][n+in] == 'O'|| (*board).a[m][n+in] < 90){
-    (*ml)[i] = intstring(m,n,m,n+in);
-     i++;
-     if ((*board).a[m][n+in] <90){
-      in = 8;
-    }
-    in++; 
-  }
-   in = 1;
-  while (n - in > 0&&(*board).a[m][n-in] == 'O'|| (*board).a[m][n-in] < 90){
-    (*ml)[i] = intstring(m,n,m,n-in);
-     i++;
-     if ((*board).a[m][n-in] <90){
-      in = 8;
-    }
-    in++; 
-  }
-  return i;
-}
-int addpawns(struct board * board, int m, int n,int i, char***ml){
-  if (m < 7 && (*board).a[m+1][n] == 'O'){
-    (*ml)[i] = intstring(m,n,m+1,n);
-    i++;
-  }
-  if (m < 7 && n > 0&& (*board).a[m+1][n-1] <90){
-      (*ml)[i] = intstring(m,n,m+1,n-1);
-      i++;
-    }
-   if (m < 7 && n < 7&& (*board).a[m+1][n+1] <90){
-      (*ml)[i] = intstring(m,n,m+1,n+1);
-      i++;
-    }
-  if (m == 1 && (*board).a[m+2][n] == 'O'){
-    (*ml)[i] = intstring(m,n,m+2,n);
-     i++;
-  }
-  //case for nonfriends
-  return i;
-}
-int addqueens(struct board * board, int m, int n,int i, char***ml){
-  i += addrooks(board, m, n, i, ml);
-  i += addbishops(board,m,n,i,ml);
-  return i;
-}
-
-//___________________________________________________________________
-
-int addkings1(struct board * board, int m, int n,int i, char***ml){
-  if (m < 7 &&(*board).a[m+1][n] == 'O' ||(*board).a[m+1][n]>90){
-    (*ml)[i] = intstring(m,n,m+1,n);
-    i++;
-  }
-  if (m > 0 &&(*board).a[m-1][n] == 'O'||(*board).a[m-1][n]>90){
-      (*ml)[i] = intstring(m,n,m-1,n);
-      i++;
-  }
-  if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' || (*board).a[m+1][n+1] >90 ){
-    (*ml)[i] = intstring(m,n,m+1,n+1);
-    i++;
-  }
-  if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O' ||(*board).a[m+1][n-1] > 90){
-    (*ml)[i] = intstring(m,n,m+1,n-1);
-    i++;
-  }
-  if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'||(*board).a[m-1][n-1]>90){
-    (*ml)[i] = intstring(m,n,m-1,n-1);
-    i++;
-  }
-  if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'||(*board).a[m-1][n+1]>90){
-    (*ml)[i] = intstring(m,n,m-1,n+1);
-   i++;
-
-  }
-  if (n > 0 &&(*board).a[m][n-1] == 'O' || (*board).a[m][n-1] >90){
-    (*ml)[i] = intstring(m,n,m,n-1);
-    i++;
-  }
-  if (n < 7 &&(*board).a[m][n+1] == 'O'|| (*board).a[m][n+1]>90){
-    (*ml)[i] = intstring(m,n,m,n+1);
-  i++;
-
-  }
-  return i;
-}
-
-int addbishops1(struct board * board, int m, int n,int i , char***ml){
-  int in = 1;
-  while (m + in < 7 && n + in < 7 && (*board).a[m+in][n+in] == 'O' || (*board).a[m+in][n+in] >90){
-    (*ml)[i] = intstring(m,n,m+in,n+in);
-     i++;
-    if ((*board).a[m+in][n+in] > 90){
-      in = 8;
-    }
-    in++;
-  }
-  in = 1;
-  while (m - in > 0 && n + in < 7 && (*board).a[m-in][n+in] == 'O' || (*board).a[m-in][n+in] >90){
-    (*ml)[i] = intstring(m,n,m-in,n+in);
-    i++;
-    if ((*board).a[m-in][n+in] > 90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (m - in > 0 && n - in > 0  && (*board).a[m-in][n-in] == 'O' || (*board).a[m-in][n-in] >90){
-    (*ml)[i] = intstring(m,n,m-in,n-in);
-    i++;
-    if ((*board).a[m-in][n-in] > 90){
-      in = 8;
-    }
-    in++; 
-  }
-   in = 1;
-  while (m + in < 7 && n - in > 0 && (*board).a[m+in][n-in] == 'O' || (*board).a[m+in][n-in] >90){
-    (*ml)[i] = intstring(m,n,m+in,n-in);
-    i++;
-    if ((*board).a[m+in][n-in] > 90){
-      in = 8;
-    }
-    in++; 
-  } 
-  return i;
-}
-int addknights1(struct board * board, int m, int n,int i, char***ml){
-   if (m < 6 && n < 7 && (*board).a[m+2][n+1]== 'O' ||(*board).a[m+2][n+1] >90){
-    (*ml)[i] = intstring(m,n,m+2,n+1);
-    i++;
-
-  }
-   if (m < 7 && n < 6 && (*board).a[m+1][n+2] == 'O'||(*board).a[m+1][n+2]>90){
-    (*ml)[i] = intstring(m,n,m+1,n+2);
-    i++;
-
-  }
-   if (m < 6 && n > 0  && (*board).a[m+2][n-1] == 'O'||(*board).a[m+2][n-1]>90){
-    (*ml)[i] = intstring(m,n,m+2,n-1);
-  i++;
-
-  }
-   if (m < 7 && n >1 && (*board).a[m+1][n-2] == 'O'||(*board).a[m+1][n-2]>90){
-    (*ml)[i] = intstring(m,n,m+1,n-2);
-    i++;
-
-  }
-   if (m >0 && n < 6 && (*board).a[m-1][n+2] == 'O'|| (*board).a[m-1][n+2]>90){
-    (*ml)[i] = intstring(m,n,m-1,n+2);
-    i++;
-   }
-   if (m>1 && n < 7 && (*board).a[m-2][n+1] == 'O'|| (*board).a[m-2][n+1]>90){
-     (*ml)[i] = intstring(m,n,m-2,n+1);
-    i++;
-   }
-   if (m > 0 && n > 1  && (*board).a[m-1][n-2] == 'O'||(*board).a[m-1][n-2]>90){
-    (*ml)[i] = intstring(m,n,m-1,n-2);
-     i++;
-   }
-   if (m > 1 && n > 0 && (*board).a[m-2][n-1] == 'O'||(*board).a[m-1][n-2]>90){
-    (*ml)[i] = intstring(m,n,m-2,n-1);
-     i++;
-  }
-   return i;
-}
-int addrooks1(struct board * board, int m, int n,int i , char***ml){
-  int in = 1;
-  while (m + in < 7 && (*board).a[m+in][n] == 'O'|| (*board).a[m+in][n] >90){
-    (*ml)[i] = intstring(m,n,m+in,n);
-    i++;
-    if ((*board).a[m+in][n] >90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (m - in > 0 &&(*board).a[m-in][n] == 'O'|| (*board).a[m-in][n] > 90){
-    (*ml)[i] = intstring(m,n,m-in,n);
-   i++;
-     if ((*board).a[m-in][n] >90){
-      in = 8;
-    }
-    in++; 
-  }
-  in = 1;
-  while (n + in <7 &&(*board).a[m][n+in] == 'O'|| (*board).a[m][n+in] > 90){
-    (*ml)[i] = intstring(m,n,m,n+in);
-     i++;
-     if ((*board).a[m][n+in] >90){
-      in = 8;
-    }
-    in++; 
-  }
-   in = 1;
-  while (n - in > 0&&(*board).a[m][n-in] == 'O'|| (*board).a[m][n-in] > 90){
-    (*ml)[i] = intstring(m,n,m,n-in);
-     i++;
-     if ((*board).a[m][n-in] >90){
-      in = 8;
-    }
-    in++; 
-  }
-  return i;
-}
-int  addpawns1(struct board * board, int m, int n,int i, char***ml){
-
-  if (m > 0 && (*board).a[m-1][n] == 'O'){
-
-    (*ml)[i] = intstring(m,n,m-1,n);
-
-i++;  }
-
-  if (m >0 && n > 0&& (*board).a[m-1][n-1] >90){
-
-      (*ml)[i] = intstring(m,n,m-1,n-1);
-
-      i++;
-
-    }
-
-   if (m >0 && n < 7&& (*board).a[m-1][n+1] >90){
-
-      (*ml)[i] = intstring(m,n,m-1,n+1);
-
-      i++;
-
-    }
-
-  if (m == 6 && (*board).a[m-2][n] == 'O'){
-
-    (*ml)[i] = intstring(m,n,m-2,n);
-
-    i++;
-
-  }
-  return i;
-  //case for nonfriends
-
-}
-int addqueens1(struct board * board, int m, int n,int i, char***ml){
-  i+= addrooks1(board, m, n, i, ml);
-  i+=addbishops1(board,m,n,i,ml);
-  return i;
-}
-//__________________________________________________________
-
-
-
 char *** findallmoves(struct board * board){
-  char *** movelist = malloc(sizeof(char[1000][10]));
-  int index = 0;
-  (*movelist)[0] = intstring(1,2,3,4);
+  char *** movelist = malloc(sizeof(char[150][4]));
+  int * index = malloc(sizeof(int*));
+  *index = 0;
   for (int i = 0; i < 8; i++){
     for (int j = 0; j < 8; j++){
       char p = (*board).a[i][j];
-      if (p = 'k' && (*board).b == 1){
+      if (p = 'K' && (*board).b == 1){
 	addkings(board, i, j,index, movelist);
       }
-      if (p = 'q' && (*board).b== 1){
+      if (p = 'Q' && (*board).b== 1){
 	addqueens(board, i, j,index, movelist);
       }
-      if (p = 'b' && (*board).b== 1){
+      if (p = 'B' && (*board).b== 1){
 	addbishops(board, i, j, index,movelist);
       }
-      if (p = 'n' && (*board).b== 1){
+      if (p = 'N' && (*board).b== 1){
 	addknights(board, i, j, index,movelist);
       }
-      if (p = 'r' && (*board).b== 1){
+      if (p = 'R' && (*board).b== 1){
 	addrooks(board, i, j, index,movelist);
       }
-      if (p = 'p' && (*board).b== 1){
+      if (p = 'P' && (*board).b== 1){
 	addpawns(board, i, j, index, movelist);
       }
-       if (p = 'K' && (*board).b == -1){
-      	addkings1(board, i, j,index, movelist);
-	}
-       if (p = 'Q' && (*board).b== -1){
+      if (p = 'k'&& (*board).b == -1){
+	addkings1(board, i, j,index, movelist);
+      }
+      if (p = 'q' && (*board).b== -1){
 	addqueens1(board, i, j,index, movelist);
       }
-      if (p = 'B' && (*board).b== -1){
+      if (p = 'b' && (*board).b== -1){
 	addbishops1(board, i, j,index,movelist);
       }
-      if (p = 'N' && (*board).b== -1){
+      if (p = 'n' && (*board).b== -1){
 	addknights1(board, i, j, index,movelist);
       }
-      if (p = 'R' && (*board).b== -1){
+      if (p = 'r' && (*board).b== -1){
 	addrooks1(board, i, j, index,movelist);
       }
-      if (p = 'P' && (*board).b== -1){
+      if (p = 'p' && (*board).b== -1){
 	addpawns1(board, i, j, index, movelist);
-	}
+      }
     }
-    }
+  }
   return movelist;
 }
 
@@ -997,7 +1534,7 @@ char* findbestmove(struct board * board, int depth){
   if(depth == 0){
     int counter = 0;
     while(movelist[counter] != NULL){
-	bestcases[counter] = findvalue(board, movelist[counter]);
+      bestcases[counter] = findvalue(board, movelist[counter]);
     }
     int mod = (*board).b;
     int best = bestcases[0];
@@ -1060,16 +1597,21 @@ int main(){
   printboard(board);
   while(1){
     char input[10];
-    fgets(input, sizeof(input), stdin);
-    char i = input[0] - '0';
-    char j = input[1] - '0';
-    char m = input[2] - '0';
-    char n = input[3] - '0';
-    movepieceWrap(board,i,j,m,n);
+    //fgets(input, sizeof(input), stdin);
+    
+
+    //char i = input[0] - '0';
+    //char j = input[1] - '0';
+    //char m = input[2] - '0';
+    //char n = input[3] - '0';
+
+    
+
+    movepieceWrap(board,6,0,4,0);
     printboard(board);
-     printf("%d\n", evalboard(board));
-     // printf("%p\n", findallmoves(board));
-     char ** movelist = *findallmoves(board);
+    printf("%d\n", evalboard(board));
+    printf("%p\n", findallmoves(board));
+     
   }  
   return 0;
 }
