@@ -66,3 +66,5 @@ Known Bugs
 Sometimes, after client connects, there is an infinite loop printing enter command and an errno in server
 
 Sometimes, turns do not properly function in a player vs player game; for example, a player's command going through even though it isn't their turn, or the turns not switching
+
+./ai causes a segfault due to trying to find all moves
