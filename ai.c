@@ -502,6 +502,47 @@ int evalboard(struct board * board){
   return value;
 }
 
+
+
+
+
+char*** findallmoves(struct board * board){
+  char*** movelist = malloc(sizeof(char[140][4]));
+  int index = 0;
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      char aa = (*board).a[i][j];
+      if(aa == 'K' && (*board).b == 1){
+	
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    }
+  }
+  return movelist;
+}
+
+
+
+
+
+
+
+
+
 int main(){
   struct board* board = startgame();
   printboard(board);

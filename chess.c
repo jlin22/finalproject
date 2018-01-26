@@ -7,12 +7,15 @@
 #include <fcntl.h>
 
 
-struct board {char a[8][8];};
+struct board {
+  char a[8][8];
+  int b;
+};
 
 
 struct board* startgame(){
   struct board* b = malloc(sizeof(struct board));
-
+  (*b).b = 1;
 
   (*b).a[0][0] = 'r';
   (*b).a[0][1] = 'n';
@@ -55,6 +58,7 @@ void movepiece(struct board* board, int i, int j, int m, int n){
   char a = (*board).a[i][j];
   (*board).a[i][j] = 'O';
   (*board).a[m][n] = a;
+  (*board).b *= -1;
 }
 
 int movepieceWrap(struct board* board, int i, int j, int m, int n){
