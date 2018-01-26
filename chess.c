@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include <fcntl.h>
 
 
@@ -794,7 +796,7 @@ void printboard(struct board* board){
   }
    
 }
-char * boardstring(struct board* board){
+/*char * boardstring(struct board* board){
   //puts boardstring in "string"
   int fd = open("string", O_WRONLY|O_CREAT, 0600);
   int in= dup(1);
@@ -806,4 +808,4 @@ char * boardstring(struct board* board){
   char * buffer;
   read(file, buffer, 256);
   return buffer;
-}
+  }*/
