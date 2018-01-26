@@ -532,377 +532,383 @@ char * intstring(int a, int b, int c, int d){
   return x;
 }
   
-void addkings(struct board * board, int m, int n,int *i, char***ml){
+int addkings(struct board * board, int m, int n,int i, char***ml){
   if (m < 7 &&(*board).a[m+1][n] == 'O' ||(*board).a[m+1][n]<90){
-    (*ml)[*i] = intstring(m,n,m+1,n);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n);
+    i++;
   }
   if (m > 0 &&(*board).a[m-1][n] == 'O'||(*board).a[m-1][n]<90){
-      (*ml)[*i] = intstring(m,n,m-1,n);
-      (*i)++;
+      (*ml)[i] = intstring(m,n,m-1,n);
+      i++;
   }
   if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' || (*board).a[m+1][n+1] <90 ){
-    (*ml)[*i] = intstring(m,n,m+1,n+1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n+1);
+    i++;
   }
   if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O' ||(*board).a[m+1][n-1] < 90){
-    (*ml)[*i] = intstring(m,n,m+1,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n-1);
+    i++;
   }
   if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'||(*board).a[m-1][n-1]<90){
-    (*ml)[*i] = intstring(m,n,m-1,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n-1);
+    i++;
   }
   if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'||(*board).a[m-1][n+1]<90){
-    (*ml)[*i] = intstring(m,n,m-1,n+1);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n+1);
+   i++;
 
   }
   if (n > 0 &&(*board).a[m][n-1] == 'O' || (*board).a[m][n-1] <90){
-    (*ml)[*i] = intstring(m,n,m,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m,n-1);
+    i++;
   }
   if (n < 7 &&(*board).a[m][n+1] == 'O'|| (*board).a[m][n+1]<90){
-    (*ml)[*i] = intstring(m,n,m,n+1);
-  (*i)++;
+    (*ml)[i] = intstring(m,n,m,n+1);
+  i++;
 
   }
+  return i;
 }
 
-void addbishops(struct board * board, int m, int n,int *i , char***ml){
-  int in = 0;
+int addbishops(struct board * board, int m, int n,int i , char***ml){
+  int in = 1;
   while (m + in < 7 && n + in < 7 && (*board).a[m+in][n+in] == 'O' || (*board).a[m+in][n+in] <90){
-    (*ml)[*i] = intstring(m,n,m+in,n+in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n+in);
+     i++;
     if ((*board).a[m+in][n+in] < 90){
       in = 8;
     }
     in++;
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 && n + in < 7 && (*board).a[m-in][n+in] == 'O' || (*board).a[m-in][n+in] <90){
-    (*ml)[*i] = intstring(m,n,m-in,n+in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n+in);
+    i++;
     if ((*board).a[m-in][n+in] < 90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 && n - in > 0  && (*board).a[m-in][n-in] == 'O' || (*board).a[m-in][n-in] <90){
-    (*ml)[*i] = intstring(m,n,m-in,n-in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n-in);
+    i++;
     if ((*board).a[m-in][n-in] < 90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (m + in < 7 && n - in > 0 && (*board).a[m+in][n-in] == 'O' || (*board).a[m+in][n-in] <90){
-    (*ml)[*i] = intstring(m,n,m+in,n-in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n-in);
+    i++;
     if ((*board).a[m+in][n-in] < 90){
       in = 8;
     }
     in++; 
   } 
- 
+  return i;
 }
-void addknights(struct board * board, int m, int n,int *i, char***ml){
+int addknights(struct board * board, int m, int n,int i, char***ml){
    if (m < 6 && n < 7 && (*board).a[m+2][n+1]== 'O' ||(*board).a[m+2][n+1] <90){
-    (*ml)[*i] = intstring(m,n,m+2,n+1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+2,n+1);
+    i++;
 
   }
    if (m < 7 && n < 6 && (*board).a[m+1][n+2] == 'O'||(*board).a[m+1][n+2]<90){
-    (*ml)[*i] = intstring(m,n,m+1,n+2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n+2);
+    i++;
 
   }
    if (m < 6 && n > 0  && (*board).a[m+2][n-1] == 'O'||(*board).a[m+2][n-1]<90){
-    (*ml)[*i] = intstring(m,n,m+2,n-1);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m+2,n-1);
+   i++;
 
   }
    if (m < 7 && n >1 && (*board).a[m+1][n-2] == 'O'||(*board).a[m+1][n-2]<90){
-    (*ml)[*i] = intstring(m,n,m+1,n-2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n-2);
+    i++;
 
   }
    if (m >0 && n < 6 && (*board).a[m-1][n+2] == 'O'|| (*board).a[m-1][n+2]<90){
-    (*ml)[*i] = intstring(m,n,m-1,n+2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n+2);
+    i++;
    }
    if (m>1 && n < 7 && (*board).a[m-2][n+1] == 'O'|| (*board).a[m-2][n+1]<90){
-     (*ml)[*i] = intstring(m,n,m-2,n+1);
-    (*i)++;
+     (*ml)[i] = intstring(m,n,m-2,n+1);
+    i++;
    }
    if (m > 0 && n > 1  && (*board).a[m-1][n-2] == 'O'||(*board).a[m-1][n-2]<90){
-    (*ml)[*i] = intstring(m,n,m-1,n-2);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n-2);
+     i++;
    }
    if (m > 1 && n > 0 && (*board).a[m-2][n-1] == 'O'||(*board).a[m-1][n-2]<90){
-    (*ml)[*i] = intstring(m,n,m-2,n-1);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m-2,n-1);
+    i++;
   }
-  
+   return i;
 }
-void addrooks(struct board * board, int m, int n,int *i , char***ml){
-  int in = 0;
+int addrooks(struct board * board, int m, int n,int i , char***ml){
+  int in = 1;
   while (m + in < 7 && (*board).a[m+in][n] == 'O'|| (*board).a[m+in][n] < 90){
-    (*ml)[*i] = intstring(m,n,m+in,n);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n);
+    i++;
     if ((*board).a[m+in][n] <90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 &&(*board).a[m-in][n] == 'O'|| (*board).a[m-in][n] < 90){
-    (*ml)[*i] = intstring(m,n,m-in,n);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n);
+   i++;
      if ((*board).a[m-in][n] <90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (n + in <7 &&(*board).a[m][n+in] == 'O'|| (*board).a[m][n+in] < 90){
-    (*ml)[*i] = intstring(m,n,m,n+in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m,n+in);
+     i++;
      if ((*board).a[m][n+in] <90){
       in = 8;
     }
     in++; 
   }
-   in = 0;
+   in = 1;
   while (n - in > 0&&(*board).a[m][n-in] == 'O'|| (*board).a[m][n-in] < 90){
-    (*ml)[*i] = intstring(m,n,m,n-in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m,n-in);
+     i++;
      if ((*board).a[m][n-in] <90){
       in = 8;
     }
     in++; 
-  } 
+  }
+  return i;
 }
-void addpawns(struct board * board, int m, int n,int *i, char***ml){
+int addpawns(struct board * board, int m, int n,int i, char***ml){
   if (m < 7 && (*board).a[m+1][n] == 'O'){
-    (*ml)[*i] = intstring(m,n,m+1,n);
- (*i)++;  }
+    (*ml)[i] = intstring(m,n,m+1,n);
+    i++;
+  }
   if (m < 7 && n > 0&& (*board).a[m+1][n-1] <90){
-      (*ml)[*i] = intstring(m,n,m+1,n-1);
-       (*i)++;
+      (*ml)[i] = intstring(m,n,m+1,n-1);
+      i++;
     }
    if (m < 7 && n < 7&& (*board).a[m+1][n+1] <90){
-      (*ml)[*i] = intstring(m,n,m+1,n+1);
-      (*i)++;
+      (*ml)[i] = intstring(m,n,m+1,n+1);
+      i++;
     }
   if (m == 1 && (*board).a[m+2][n] == 'O'){
-    (*ml)[*i] = intstring(m,n,m+2,n);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m+2,n);
+     i++;
   }
   //case for nonfriends
+  return i;
 }
-void addqueens(struct board * board, int m, int n,int *i, char***ml){
-  addrooks(board, m, n, i, ml);
-  addbishops(board,m,n,i,ml);
-  
+int addqueens(struct board * board, int m, int n,int i, char***ml){
+  i += addrooks(board, m, n, i, ml);
+  i += addbishops(board,m,n,i,ml);
+  return i;
 }
 
 //___________________________________________________________________
 
-void addkings1(struct board * board, int m, int n,int *i, char***ml){
+int addkings1(struct board * board, int m, int n,int i, char***ml){
   if (m < 7 &&(*board).a[m+1][n] == 'O' ||(*board).a[m+1][n]>90){
-    (*ml)[*i] = intstring(m,n,m+1,n);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n);
+    i++;
   }
   if (m > 0 &&(*board).a[m-1][n] == 'O'||(*board).a[m-1][n]>90){
-      (*ml)[*i] = intstring(m,n,m-1,n);
-      (*i)++;
+      (*ml)[i] = intstring(m,n,m-1,n);
+      i++;
   }
   if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' || (*board).a[m+1][n+1] >90 ){
-    (*ml)[*i] = intstring(m,n,m+1,n+1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n+1);
+    i++;
   }
   if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O' ||(*board).a[m+1][n-1] > 90){
-    (*ml)[*i] = intstring(m,n,m+1,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n-1);
+    i++;
   }
   if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'||(*board).a[m-1][n-1]>90){
-    (*ml)[*i] = intstring(m,n,m-1,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n-1);
+    i++;
   }
   if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'||(*board).a[m-1][n+1]>90){
-    (*ml)[*i] = intstring(m,n,m-1,n+1);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n+1);
+   i++;
 
   }
   if (n > 0 &&(*board).a[m][n-1] == 'O' || (*board).a[m][n-1] >90){
-    (*ml)[*i] = intstring(m,n,m,n-1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m,n-1);
+    i++;
   }
   if (n < 7 &&(*board).a[m][n+1] == 'O'|| (*board).a[m][n+1]>90){
-    (*ml)[*i] = intstring(m,n,m,n+1);
-  (*i)++;
+    (*ml)[i] = intstring(m,n,m,n+1);
+  i++;
 
   }
+  return i;
 }
 
-void addbishops1(struct board * board, int m, int n,int *i , char***ml){
-  int in = 0;
+int addbishops1(struct board * board, int m, int n,int i , char***ml){
+  int in = 1;
   while (m + in < 7 && n + in < 7 && (*board).a[m+in][n+in] == 'O' || (*board).a[m+in][n+in] >90){
-    (*ml)[*i] = intstring(m,n,m+in,n+in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n+in);
+     i++;
     if ((*board).a[m+in][n+in] > 90){
       in = 8;
     }
     in++;
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 && n + in < 7 && (*board).a[m-in][n+in] == 'O' || (*board).a[m-in][n+in] >90){
-    (*ml)[*i] = intstring(m,n,m-in,n+in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n+in);
+    i++;
     if ((*board).a[m-in][n+in] > 90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 && n - in > 0  && (*board).a[m-in][n-in] == 'O' || (*board).a[m-in][n-in] >90){
-    (*ml)[*i] = intstring(m,n,m-in,n-in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n-in);
+    i++;
     if ((*board).a[m-in][n-in] > 90){
       in = 8;
     }
     in++; 
   }
-   in = 0;
+   in = 1;
   while (m + in < 7 && n - in > 0 && (*board).a[m+in][n-in] == 'O' || (*board).a[m+in][n-in] >90){
-    (*ml)[*i] = intstring(m,n,m+in,n-in);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n-in);
+    i++;
     if ((*board).a[m+in][n-in] > 90){
       in = 8;
     }
     in++; 
   } 
- 
+  return i;
 }
-void addknights1(struct board * board, int m, int n,int *i, char***ml){
+int addknights1(struct board * board, int m, int n,int i, char***ml){
    if (m < 6 && n < 7 && (*board).a[m+2][n+1]== 'O' ||(*board).a[m+2][n+1] >90){
-    (*ml)[*i] = intstring(m,n,m+2,n+1);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+2,n+1);
+    i++;
 
   }
    if (m < 7 && n < 6 && (*board).a[m+1][n+2] == 'O'||(*board).a[m+1][n+2]>90){
-    (*ml)[*i] = intstring(m,n,m+1,n+2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n+2);
+    i++;
 
   }
    if (m < 6 && n > 0  && (*board).a[m+2][n-1] == 'O'||(*board).a[m+2][n-1]>90){
-    (*ml)[*i] = intstring(m,n,m+2,n-1);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m+2,n-1);
+  i++;
 
   }
    if (m < 7 && n >1 && (*board).a[m+1][n-2] == 'O'||(*board).a[m+1][n-2]>90){
-    (*ml)[*i] = intstring(m,n,m+1,n-2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+1,n-2);
+    i++;
 
   }
    if (m >0 && n < 6 && (*board).a[m-1][n+2] == 'O'|| (*board).a[m-1][n+2]>90){
-    (*ml)[*i] = intstring(m,n,m-1,n+2);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n+2);
+    i++;
    }
    if (m>1 && n < 7 && (*board).a[m-2][n+1] == 'O'|| (*board).a[m-2][n+1]>90){
-     (*ml)[*i] = intstring(m,n,m-2,n+1);
-    (*i)++;
+     (*ml)[i] = intstring(m,n,m-2,n+1);
+    i++;
    }
    if (m > 0 && n > 1  && (*board).a[m-1][n-2] == 'O'||(*board).a[m-1][n-2]>90){
-    (*ml)[*i] = intstring(m,n,m-1,n-2);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m-1,n-2);
+     i++;
    }
    if (m > 1 && n > 0 && (*board).a[m-2][n-1] == 'O'||(*board).a[m-1][n-2]>90){
-    (*ml)[*i] = intstring(m,n,m-2,n-1);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m-2,n-1);
+     i++;
   }
-  
+   return i;
 }
-void addrooks1(struct board * board, int m, int n,int *i , char***ml){
-  int in = 0;
+int addrooks1(struct board * board, int m, int n,int i , char***ml){
+  int in = 1;
   while (m + in < 7 && (*board).a[m+in][n] == 'O'|| (*board).a[m+in][n] >90){
-    (*ml)[*i] = intstring(m,n,m+in,n);
-    (*i)++;
+    (*ml)[i] = intstring(m,n,m+in,n);
+    i++;
     if ((*board).a[m+in][n] >90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (m - in > 0 &&(*board).a[m-in][n] == 'O'|| (*board).a[m-in][n] > 90){
-    (*ml)[*i] = intstring(m,n,m-in,n);
-   (*i)++;
+    (*ml)[i] = intstring(m,n,m-in,n);
+   i++;
      if ((*board).a[m-in][n] >90){
       in = 8;
     }
     in++; 
   }
-  in = 0;
+  in = 1;
   while (n + in <7 &&(*board).a[m][n+in] == 'O'|| (*board).a[m][n+in] > 90){
-    (*ml)[*i] = intstring(m,n,m,n+in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m,n+in);
+     i++;
      if ((*board).a[m][n+in] >90){
       in = 8;
     }
     in++; 
   }
-   in = 0;
+   in = 1;
   while (n - in > 0&&(*board).a[m][n-in] == 'O'|| (*board).a[m][n-in] > 90){
-    (*ml)[*i] = intstring(m,n,m,n-in);
-     (*i)++;
+    (*ml)[i] = intstring(m,n,m,n-in);
+     i++;
      if ((*board).a[m][n-in] >90){
       in = 8;
     }
     in++; 
-  } 
+  }
+  return i;
 }
-void addpawns1(struct board * board, int m, int n,int *i, char***ml){
+int  addpawns1(struct board * board, int m, int n,int i, char***ml){
 
   if (m > 0 && (*board).a[m-1][n] == 'O'){
 
-    (*ml)[*i] = intstring(m,n,m-1,n);
+    (*ml)[i] = intstring(m,n,m-1,n);
 
-(*i)++;  }
+i++;  }
 
   if (m >0 && n > 0&& (*board).a[m-1][n-1] >90){
 
-      (*ml)[*i] = intstring(m,n,m-1,n-1);
+      (*ml)[i] = intstring(m,n,m-1,n-1);
 
-      (*i)++;
+      i++;
 
     }
 
    if (m >0 && n < 7&& (*board).a[m-1][n+1] >90){
 
-      (*ml)[*i] = intstring(m,n,m-1,n+1);
+      (*ml)[i] = intstring(m,n,m-1,n+1);
 
-      (*i)++;
+      i++;
 
     }
 
   if (m == 6 && (*board).a[m-2][n] == 'O'){
 
-    (*ml)[*i] = intstring(m,n,m-2,n);
+    (*ml)[i] = intstring(m,n,m-2,n);
 
-    (*i)++;
+    i++;
 
   }
-
+  return i;
   //case for nonfriends
 
 }
-void addqueens1(struct board * board, int m, int n,int *i, char***ml){
-  addrooks1(board, m, n, i, ml);
-  addbishops1(board,m,n,i,ml);
-  
+int addqueens1(struct board * board, int m, int n,int i, char***ml){
+  i+= addrooks1(board, m, n, i, ml);
+  i+=addbishops1(board,m,n,i,ml);
+  return i;
 }
 //__________________________________________________________
 
@@ -910,8 +916,8 @@ void addqueens1(struct board * board, int m, int n,int *i, char***ml){
 
 char *** findallmoves(struct board * board){
   char *** movelist = malloc(sizeof(char[1000][10]));
-  int * index ;
-  (*index) = 0;
+  int index = 0;
+  (*movelist)[0] = intstring(1,2,3,4);
   for (int i = 0; i < 8; i++){
     for (int j = 0; j < 8; j++){
       char p = (*board).a[i][j];
@@ -933,14 +939,14 @@ char *** findallmoves(struct board * board){
       if (p = 'p' && (*board).b== 1){
 	addpawns(board, i, j, index, movelist);
       }
-      if (p = 'K' && (*board).b == -1){
-	addkings1(board, i, j,index, movelist);
-      }
-      if (p = 'Q' && (*board).b== -1){
+       if (p = 'K' && (*board).b == -1){
+      	addkings1(board, i, j,index, movelist);
+	}
+       if (p = 'Q' && (*board).b== -1){
 	addqueens1(board, i, j,index, movelist);
       }
       if (p = 'B' && (*board).b== -1){
-	addbishops1(board, i, j, index,movelist);
+	addbishops1(board, i, j,index,movelist);
       }
       if (p = 'N' && (*board).b== -1){
 	addknights1(board, i, j, index,movelist);
@@ -950,9 +956,9 @@ char *** findallmoves(struct board * board){
       }
       if (p = 'P' && (*board).b== -1){
 	addpawns1(board, i, j, index, movelist);
-      }
+	}
     }
-  }
+    }
   return movelist;
 }
 
@@ -1061,8 +1067,9 @@ int main(){
     char n = input[3] - '0';
     movepieceWrap(board,i,j,m,n);
     printboard(board);
-    printf("%d\n", evalboard(board));
-    printf("%p\n", findallmoves(board));
+     printf("%d\n", evalboard(board));
+     // printf("%p\n", findallmoves(board));
+     char ** movelist = *findallmoves(board);
   }  
   return 0;
 }
