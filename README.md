@@ -14,7 +14,6 @@ This is Chess that can be played in three ways.
 2-Loading a game state against an AI.
 
 3-Against another player
-
 -----------------------
 Topics Covered
 
@@ -25,7 +24,6 @@ Files through reading and writing in order to load game states
 Forking for the select server
 
 Allocating Memory through the use of malloc
-
 ------------------------
 Instructions
 
@@ -37,7 +35,6 @@ If the game state is in the file, then it will load and play out like a normal g
 Calling ./ai will create a new game in which you can play against an AI
 
 Calling ./server will set up the server that can have multiple clients. When two clients connect, then the game can begin
-
 ----------------------
 Known Bugs
 
