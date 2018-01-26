@@ -21,5 +21,20 @@ Finished sending commands from client to server
 Worked on applying commands to the chess board
 Finished applying commands to the chess board
 Worked on turns in chess games played through networking
-Finished turns in chess games in networking
+Turns in chess games in networking partially functioning
 Worked on trying to find all possible moves 
+Michael Lee
+1/18/18
+Worked on creating the board
+Created the board successfully
+1/19/18 
+Worked on making pawns and basic board setup
+Successful pawn movement and board setup
+1/22/18
+Worked on basic movements of pawn, rooks, and knights
+Pawns, Rooks, and Knights can all move as they were intended
+1/24/18
+Worked on pawn promotion upon reaching the end
+Worked on basic board evaluate function
+1/26/18
+Worked on trying to implement the ai algorithm but couldn't get past segfaults
