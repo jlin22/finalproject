@@ -40,7 +40,7 @@ Calling ./server will set up the server that can have multiple clients. When two
 
 Commands will be entered in the format 6040, where the first two numbers is the inital position in (R)(C) and the last two numbers is the final position in (R)(C). 6040 would move the piece from row 6, col 0 to row 4, col 0 if it is a valid move
 
-    0 1 2 3 4 5 6 7 (C)
+  0 1 2 3 4 5 6 7 (C)
 		
 0
 
