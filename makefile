@@ -1,8 +1,14 @@
 
 
-select: sclient sserver
+select: sclient sserver load ai
 
 forking: client fserver
+
+load: load.c
+	gcc -o load load.c
+ 
+ai: ai.c
+	gcc -o ai ai.c
 
 sserver: select_server.o networking.o
 	gcc -o server select_server.o networking.o

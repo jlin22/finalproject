@@ -42,6 +42,10 @@ void main(){
   fgets(name, sizeof(name), stdin);
   name[strlen(name)-1]=0;
   int file = open(name, O_RDWR, 0600);
+  if( file == -1){
+    printf("file does not exist\n");
+    exit(1);
+  }
   struct board* b = malloc(sizeof(struct board));
   read(file, b,4*8*8);
   close(file);
