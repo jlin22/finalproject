@@ -13,27 +13,27 @@ char * intstring(int a, int b, int c, int d){
 }
   
 void addkings(struct board * board, int m, int n,int i, char***ml){
-  if (m < 7 &&(*board).a[m+1][n] == 'O' &&(*board).a[m+1][n]<90){
+  if (m < 7 &&(*board).a[m+1][n] == 'O' ||(*board).a[m+1][n]<90){
     (*ml)[i] = intstring(m,n,m+1,n);
     i++;
   }
-  if (m > 0 &&(*board).a[m-1][n] == 'O'&&(*board).a[m-1][n]<90){
+  if (m > 0 &&(*board).a[m-1][n] == 'O'||(*board).a[m-1][n]<90){
       (*ml)[i] = intstring(m,n,m-1,n);
     i++;
   }
-  if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' && (*board).a[m+1][n+1] <90 ){
+  if (m < 7 && n < 7 && (*board).a[m+1][n+1] == 'O' || (*board).a[m+1][n+1] <90 ){
     (*ml)[i] = intstring(m,n,m+1,n+1);
     i++;
   }
-  if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O'){
+  if (m < 7 && n > 0 &&(*board).a[m+1][n-1] == 'O' ||(*board).a[m+1][n-1] < 90){
     (*ml)[i] = intstring(m,n,m+1,n-1);
     i++;
   }
-  if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'){
+  if (m > 0 && n > 0 &&(*board).a[m-1][n-1] == 'O'||(*board).a[m-1][n-1]<90){
     (*ml)[i] = intstring(m,n,m-1,n-1);
     i++;
   }
-  if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'){
+  if (m > 0 && n < 7 &&(*board).a[m-1][n+1] == 'O'||(*board).a[m-1][n+1]<90){
     (*ml)[i] = intstring(m,n,m-1,n+1);
     i++;
   }
