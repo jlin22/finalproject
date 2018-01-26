@@ -13,6 +13,27 @@ int evalboard(struct board * board){
   int bishop[8][8];
   int pawn[8][8];
 
+  int whiteking = 0;
+  int blackking = 0;
+
+  for(int I = 0; I < 8; I++){
+    for(int J = 0; J < 8; J++){
+      if((*board).a[I][J] == 'K'){
+	whiteking = 1;
+      }
+      if((*board).a[I][J] == 'k'){
+	blackking = 1;
+      }
+    }
+  }
+
+  if(whiteking == 0){
+    return -100000;
+  }
+  if(blackking == 0){
+    return 100000;
+  }
+
   king[0][0] = -30;
   king[0][1] = -40;
   king[0][2] = -40;
@@ -516,10 +537,10 @@ char*** findallmoves(struct board * board){
 	
 
       }
+      
 
 
-
-
+      
 
 
 
@@ -536,10 +557,91 @@ char*** findallmoves(struct board * board){
 }
 
 
+int findvalue(struct board * board, char * move){
+  int i = move[0] - '0';
+  int j = move[1] - '0';
+  int m = move[2] - '0';
+  int n = move[3] - '0';
+
+  struct board c;
+  c.b = (*board).b;
+  for(int I = 0; I < 8; I++){
+    for(int J = 0; J < 8; J++){
+      c.a[I][J] = (*board).a[I][J];
+    }
+  }
+
+  movepieceWrap(&c, i, j, m, n);
+  return evalboard(&c);
+}
 
 
+  
 
+char* findbestmove(struct board * board, int depth){
+  depth--;
+  char ** movelist = *findallmoves(board);
+  int bestcases[140];
 
+  
+  if(depth == 0){
+    int counter = 0;
+    while(movelist[counter] != NULL){
+	bestcases[counter] = findvalue(board, movelist[counter]);
+    }
+    int mod = (*board).b;
+    int best = bestcases[0];
+    int dexbest = 0;
+    counter = 1;
+    while(movelist[counter] != NULL){
+      if(bestcases[counter] * mod > best * mod){
+	best = bestcases[counter];
+	dexbest = counter;
+      }
+    }
+    return movelist[dexbest];
+    
+  }
+  
+  else{
+    char bestmoves[140][4];
+    int counter = 0;
+    while(movelist[counter] != NULL){
+      struct board c;
+      c.b = (*board).b;
+      for(int I = 0; I < 8; I++){
+	for(int J = 0; J < 8; J++){
+	  c.a[I][J] = (*board).a[I][J];
+	}
+      }
+      int i = movelist[counter][0] - '0';
+      int j = movelist[counter][1] - '0';
+      int m = movelist[counter][2] - '0';
+      int n = movelist[counter][3] - '0';
+      movepieceWrap(&c,i,j,m,n);
+      //
+      *bestmoves[counter] = *findbestmove(&c, depth);
+      //
+      counter = 0;
+      while(bestmoves[counter] != NULL){
+	bestcases[counter] = findvalue(board, bestmoves[counter]);
+      }
+    }
+    int mod = (*board).b;
+    int best = bestcases[0];
+    int dexbest = 0;
+    counter = 1;
+    while(movelist[counter] != NULL){
+      if(bestcases[counter] * mod > best * mod){
+	best = bestcases[counter];
+	dexbest = counter;
+      }
+    }
+    char* bm = malloc(sizeof(char[4]));
+    bm = bestmoves[dexbest];
+    return bm;    
+  }
+}
 
 
 

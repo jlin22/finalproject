@@ -10,6 +10,7 @@
 struct board {
   char a[8][8];
   int b;
+  char storage[8][8];
 };
 
 
